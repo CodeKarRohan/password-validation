@@ -94,7 +94,13 @@ public class ValidationEngine {
             return false;
         }
 
-        return true;
+       if(validScenario + res.size() >=3){
+           return true;
+       }else{
+           return false;
+       }
+
+
 
 
 

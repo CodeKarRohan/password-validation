@@ -66,7 +66,7 @@ public class PasswordValidate implements PasswordValidator {
 
        for(int i =0; i <c.length; i++) {
 
-            if (Character.isUpperCase(c[i])) {
+            if (Character.isLowerCase(c[i])) {
                 lowerCaseConditionFlag =  true;
                 checkCount += 1;
                 break;
