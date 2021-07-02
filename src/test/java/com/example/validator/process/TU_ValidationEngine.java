@@ -63,4 +63,11 @@ public class TU_ValidationEngine {
         Assert.assertFalse(res);
     }
 
+    @Test
+    public void withOnlyDigits(){
+        valEngne = new ValidationEngine("111111111111");
+        boolean res = valEngne.validatePassword();
+        Assert.assertFalse(res);
+    }
+
 }
