@@ -28,7 +28,7 @@ public class PasswordValidate implements PasswordValidator {
                 return true;
             }
         }
-        throw new PasswordValidationException("No lower case letter present");
+        throw new PasswordValidationException("No lower case letter present.");
     }
 
     @Override
@@ -48,7 +48,7 @@ public class PasswordValidate implements PasswordValidator {
         exec.shutdown();
         while (!exec.isTerminated()) ;
         if (res == null || res.size() == 0) {
-            throw new PasswordValidationException("Feature two condition is not satisfied");
+            throw new PasswordValidationException("Feature two condition is not satisfied.");
             //return false;
         }
 
@@ -56,7 +56,7 @@ public class PasswordValidate implements PasswordValidator {
             return true;
         } else {
 
-            throw new PasswordValidationException("Feature two condition is not satisfied");
+            throw new PasswordValidationException("Feature two condition is not satisfied.");
         }
     }
 
