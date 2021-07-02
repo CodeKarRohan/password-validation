@@ -70,4 +70,20 @@ public class TU_ValidationEngine {
         Assert.assertFalse(res);
     }
 
+    @Test
+    public void withAllLowerCase(){
+        valEngne = new ValidationEngine("eeeeeeeeeee");
+        boolean res = valEngne.validatePassword();
+        Assert.assertFalse(res);
+    }
+
+    @Test
+    public void withAllUpperCase(){
+        valEngne = new ValidationEngine("WWWWWWWWWWWW");
+        boolean res = valEngne.validatePassword();
+        Assert.assertFalse(res);
+    }
+
+
+
 }
