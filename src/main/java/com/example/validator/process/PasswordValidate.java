@@ -64,13 +64,13 @@ public class PasswordValidate implements PasswordValidator {
         lowerCaseConditionFlag = false;
         char[] c = password.toCharArray();
 
-        for(int i =0; i <c.length; i++) {
+       for(int i =0; i <c.length; i++) {
 
             if (Character.isUpperCase(c[i])) {
                 lowerCaseConditionFlag =  true;
                 checkCount += 1;
                 break;
-            }
+             }
         }
         return  lowerCaseConditionFlag;
     }
