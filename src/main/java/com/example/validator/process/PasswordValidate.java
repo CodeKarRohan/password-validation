@@ -1,6 +1,7 @@
 package com.example.validator.process;
 
 import com.example.validator.entity.PasswordValidator;
+import com.example.validator.exception.PasswordValidationException;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ public class PasswordValidate implements PasswordValidator {
     }
 
     @Override
-    public boolean feature1Test() {
+    public boolean feature1Test() throws PasswordValidationException {
         char[] c = password.toCharArray();
         for (int i = 0; i < c.length; i++) {
 
@@ -27,11 +28,11 @@ public class PasswordValidate implements PasswordValidator {
                 return true;
             }
         }
-        return false;
+        throw new PasswordValidationException("No lower case letter present");
     }
 
     @Override
-    public boolean feature2Test() throws ExecutionException, InterruptedException {
+    public boolean feature2Test() throws ExecutionException, InterruptedException, PasswordValidationException {
         ExecutorService exec = Executors.newFixedThreadPool(5);
         Callable<Boolean> lengthCheckTask = () -> {
             return password.length() > MIN_LENGTH;
@@ -51,13 +52,15 @@ public class PasswordValidate implements PasswordValidator {
         exec.shutdown();
         while (!exec.isTerminated()) ;
         if (res == null || res.size() == 0) {
-            return false;
+            throw new PasswordValidationException("Feature two condition is not satisfied");
+            //return false;
         }
 
         if (validScenario + res.size() >= 3) {
             return true;
         } else {
-            return false;
+
+            throw new PasswordValidationException("Feature two condition is not satisfied");
         }
     }
 
