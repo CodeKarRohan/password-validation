@@ -34,16 +34,12 @@ public class PasswordValidate implements PasswordValidator {
     @Override
     public boolean feature2Test() throws ExecutionException, InterruptedException, PasswordValidationException {
         ExecutorService exec = Executors.newFixedThreadPool(5);
-        Callable<Boolean> lengthCheckTask = () -> {
-            return password.length() > MIN_LENGTH;
-        };
+        Callable<Boolean> lengthCheckTask = () -> password.length() > MIN_LENGTH;
         Future<Boolean> lenCheck = exec.submit(lengthCheckTask);
         // boolean isNotNull = nullCheck.get();
         boolean hasValidLength = lenCheck.get();
         Future<List<Integer>> upperCaseAndDigCheck;
-        Callable<List<Integer>> upperCaseAndDigTask = () -> {
-            return this.validateUcaseAndDigit();
-        };
+        Callable<List<Integer>> upperCaseAndDigTask = () -> this.validateUcaseAndDigit();
         upperCaseAndDigCheck = exec.submit(upperCaseAndDigTask);
 
         int validScenario = 1;
