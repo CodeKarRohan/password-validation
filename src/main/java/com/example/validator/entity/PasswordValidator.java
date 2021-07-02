@@ -1,10 +1,9 @@
 package com.example.validator.entity;
 
+import java.util.concurrent.ExecutionException;
+
 public interface PasswordValidator {
 
-    boolean lengthCheck();
-    boolean nullCheck();
-    boolean  uppercaseLetterCheck();
-    boolean lowerCaseLetterCheck();
-    boolean  numberCheck();
+   boolean feature1Test();
+   boolean feature2Test() throws ExecutionException, InterruptedException;
 }

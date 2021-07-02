@@ -1,93 +1,89 @@
 package com.example.validator.process;
 
 import com.example.validator.entity.PasswordValidator;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.*;
+
+
 @Data
-@AllArgsConstructor
 public class PasswordValidate implements PasswordValidator {
 
     private  static final int MIN_LENGTH = 8;
-    private boolean lenCheckFlag;
-    private boolean nullFlag;
-    private boolean upperCaseConditionFlag;
-    private boolean lowerCaseConditionFlag;
-    private boolean numberCheckFlag;
     private String password;
-    private int checkCount =0;
-
-
 
     public  PasswordValidate(String password){
         this.password = password;
     }
 
-    public void incrementCount(){
-        this.checkCount +=1;
-    }
-
     @Override
-    public boolean lengthCheck() {
-
-        lenCheckFlag = password.length() > MIN_LENGTH;
-
-        if(lenCheckFlag) checkCount += 1;
-        return  lenCheckFlag;
-    }
-
-    @Override
-    public boolean nullCheck() {
-        nullFlag = password != null;
-        if (nullFlag) checkCount += 1;
-        return nullFlag;
-    }
-
-    @Override
-    public boolean uppercaseLetterCheck() {
-        upperCaseConditionFlag = false;
+    public boolean feature1Test() {
         char[] c = password.toCharArray();
-
-        for(int i =0; i <c.length; i++) {
-
-            if (Character.isUpperCase(c[i])) {
-                upperCaseConditionFlag =  true;
-                checkCount += 1;
-                break;
-            }
-        }
-        return  upperCaseConditionFlag;
-    }
-
-    @Override
-    public boolean lowerCaseLetterCheck() {
-        lowerCaseConditionFlag = false;
-        char[] c = password.toCharArray();
-
-       for(int i =0; i <c.length; i++) {
+        for (int i = 0; i < c.length; i++) {
 
             if (Character.isLowerCase(c[i])) {
-                lowerCaseConditionFlag =  true;
-                checkCount += 1;
-                break;
-             }
+                return true;
+            }
         }
-        return  lowerCaseConditionFlag;
+        return false;
     }
 
     @Override
-    public boolean numberCheck() {
-        numberCheckFlag = false;
+    public boolean feature2Test() throws ExecutionException, InterruptedException {
+        ExecutorService exec = Executors.newFixedThreadPool(5);
+        Callable<Boolean> lengthCheckTask = () -> {
+            return password.length() > MIN_LENGTH;
+        };
+        Future<Boolean> lenCheck = exec.submit(lengthCheckTask);
+        // boolean isNotNull = nullCheck.get();
+        boolean hasValidLength = lenCheck.get();
+        Future<List<Integer>> upperCaseAndDigCheck;
+        Callable<List<Integer>> upperCaseAndDigTask = () -> {
+            return this.validateUcaseAndDigit();
+        };
+        upperCaseAndDigCheck = exec.submit(upperCaseAndDigTask);
+
+        int validScenario = 1;
+        if (hasValidLength) validScenario++;
+        List<Integer> res = upperCaseAndDigCheck.get();
+        exec.shutdown();
+        while (!exec.isTerminated()) ;
+        if (res == null || res.size() == 0) {
+            return false;
+        }
+
+        if (validScenario + res.size() >= 3) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public List<Integer> validateUcaseAndDigit() {
+        int uCase = 0;
+        int digit = 0;
+        List<Integer> lis = new ArrayList<>();
         char[] c = password.toCharArray();
 
-        for(int i =0; i <c.length; i++) {
+        for (int i = 0; i < c.length; i++) {
 
+            if (Character.isUpperCase(c[i])) {
+                uCase++;
+                if (uCase == 1)
+                    lis.add(uCase);
+            }
             if (Character.isDigit(c[i])) {
-                numberCheckFlag =  true;
-                checkCount += 1;
+                digit++;
+                if (digit == 1)
+                    lis.add(digit);
+            }
+            if (uCase > 0 && digit > 0) {
                 break;
             }
+
         }
-        return  numberCheckFlag;
+        return lis;
     }
 }
