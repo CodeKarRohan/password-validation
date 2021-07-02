@@ -7,10 +7,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 public class TU_ValidationEngine {
 
-    ValidationEngine valEngne ;
+    ValidationEngine valEngne;
 
     @Test
-    public void testValidPassword(){
+    public void testValidPassword() {
         //this test check for a valid password
         valEngne = new ValidationEngine("Wi12345345");
         boolean res = valEngne.validatePassword();
@@ -18,7 +18,7 @@ public class TU_ValidationEngine {
     }
 
     @Test
-    public void testPasswordWithoutLowerCaseLetter(){
+    public void testPasswordWithoutLowerCaseLetter() {
         //this test check for a valid password
         valEngne = new ValidationEngine("WWW111EEE");
         boolean res = valEngne.validatePassword();
@@ -26,7 +26,7 @@ public class TU_ValidationEngine {
     }
 
     @Test
-    public void testPasswordNull(){
+    public void testPasswordNull() {
         //this test check for a valid password
         valEngne = new ValidationEngine(null);
         boolean res = valEngne.validatePassword();
@@ -34,7 +34,7 @@ public class TU_ValidationEngine {
     }
 
     @Test
-    public void testPasswordWithOnlyLowerCaseLetter(){
+    public void testPasswordWithOnlyLowerCaseLetter() {
         //this test check for a valid password
         valEngne = new ValidationEngine("wwwwwwwddsdwwwww");
         boolean res = valEngne.validatePassword();
@@ -42,7 +42,7 @@ public class TU_ValidationEngine {
     }
 
     @Test
-    public void withThreeConditionSatisfied(){
+    public void withThreeConditionSatisfied() {
         valEngne = new ValidationEngine("w1W");
         boolean res = valEngne.validatePassword();
         Assert.assertTrue(res);
@@ -50,40 +50,39 @@ public class TU_ValidationEngine {
 
 
     @Test
-    public void withLengthAndLowerCaseAndDigit(){
+    public void withLengthAndLowerCaseAndDigit() {
         valEngne = new ValidationEngine("wwewwwww1");
         boolean res = valEngne.validatePassword();
         Assert.assertTrue(res);
     }
 
     @Test
-    public void withJustLengthCheckSatisfied(){
+    public void withJustLengthCheckSatisfied() {
         valEngne = new ValidationEngine("wwwwwwwww");
         boolean res = valEngne.validatePassword();
         Assert.assertFalse(res);
     }
 
     @Test
-    public void withOnlyDigits(){
+    public void withOnlyDigits() {
         valEngne = new ValidationEngine("111111111111");
         boolean res = valEngne.validatePassword();
         Assert.assertFalse(res);
     }
 
     @Test
-    public void withAllLowerCase(){
+    public void withAllLowerCase() {
         valEngne = new ValidationEngine("eeeeeeeeeee");
         boolean res = valEngne.validatePassword();
         Assert.assertFalse(res);
     }
 
     @Test
-    public void withAllUpperCase(){
+    public void withAllUpperCase() {
         valEngne = new ValidationEngine("WWWWWWWWWWWW");
         boolean res = valEngne.validatePassword();
         Assert.assertFalse(res);
     }
-
 
 
 }

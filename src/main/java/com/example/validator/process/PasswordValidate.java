@@ -12,10 +12,10 @@ import java.util.concurrent.*;
 @Data
 public class PasswordValidate implements PasswordValidator {
 
-    private  static final int MIN_LENGTH = 8;
+    private static final int MIN_LENGTH = 8;
     private String password;
 
-    public  PasswordValidate(String password){
+    public PasswordValidate(String password) {
         this.password = password;
     }
 

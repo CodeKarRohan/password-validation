@@ -24,10 +24,10 @@ public class ValidationEngine {
             return passwordValidate.feature1Test() && passwordValidate.feature2Test();
         } catch (PasswordValidationException p1) {
 
-            LOG.error("Exception while validating password "+p1.getMessage());
+            LOG.error("Exception while validating password " + p1.getMessage());
 
         } catch (Exception e) {
-            LOG.error("Exception while validating password "+e.getMessage());
+            LOG.error("Exception while validating password " + e.getMessage());
         }
         return false;
     }
