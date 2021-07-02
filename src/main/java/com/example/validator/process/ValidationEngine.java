@@ -14,12 +14,16 @@ public class ValidationEngine {
     }
 
     public boolean validatePassword() throws ExecutionException, InterruptedException {
+
+         if(password == null){
+             return false;
+         }
         return  passwordValidate.feature1Test() && passwordValidate.feature2Test();
     }
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
 
-        ValidationEngine vengine = new ValidationEngine("W1WWeWW");
+        ValidationEngine vengine = new ValidationEngine(null);
         System.out.println(vengine.validatePassword());
 
     }
