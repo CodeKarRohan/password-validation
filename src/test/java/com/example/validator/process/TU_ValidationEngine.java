@@ -56,4 +56,11 @@ public class TU_ValidationEngine {
         Assert.assertTrue(res);
     }
 
+    @Test
+    public void withJustLengthCheckSatisfied(){
+        valEngne = new ValidationEngine("wwwwwwwww");
+        boolean res = valEngne.validatePassword();
+        Assert.assertFalse(res);
+    }
+
 }
